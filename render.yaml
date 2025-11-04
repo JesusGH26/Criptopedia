@@ -3,7 +3,6 @@ services:
   - type: web
     name: criptopedia-backend
     env: python
-    # REMOVED: plan: free (Render usa free por defecto)
     buildCommand: cd backend && pip install -r requirements.txt
     startCommand: cd backend && uvicorn main:app --host 0.0.0.0 --port $PORT
     envVars:
@@ -13,13 +12,9 @@ services:
         value: https://criptopedia-frontend.onrender.com
     healthCheckPath: /health
 
-  # Frontend (Static Site - Vanilla JS)
-  - type: static
+  # Frontend como servicio web estático (Python HTTP server)
+  - type: web
     name: criptopedia-frontend
-    # REMOVED: plan: free y env: static
-    buildCommand: echo "🔨 Frontend Vanilla JS - Listo para producción"
-    publishDir: ./frontend
-    headers:
-      - path: /*
-        name: Cache-Control
-        value: public, max-age=3600
+    env: python
+    buildCommand: echo "Frontend estático - No necesita build"
+    startCommand: cd frontend && python -m http.server $PORT
