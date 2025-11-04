@@ -1,0 +1,26 @@
+services:
+  # Backend API - FastAPI
+  - type: web
+    name: criptopedia-backend
+    env: python
+    plan: free
+    buildCommand: cd backend && pip install -r requirements.txt
+    startCommand: cd backend && uvicorn main:app --host 0.0.0.0 --port $PORT
+    envVars:
+      - key: YOUTUBE_API_KEY
+        value: AIzaSyDNphleDorA8eYwvZ9KFLgb7_5KKad-8Bk
+      - key: FRONTEND_URL
+        value: https://criptopedia-frontend.onrender.com
+    healthCheckPath: /health
+
+  # Frontend (Static Site - Vanilla JS)
+  - type: web
+    name: criptopedia-frontend
+    env: static
+    plan: free
+    buildCommand: echo "🔨 Frontend Vanilla JS - Listo para producción"
+    staticPublishPath: ./frontend
+    headers:
+      - path: /*
+        name: Cache-Control
+        value: public, max-age=3600
