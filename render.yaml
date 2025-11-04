@@ -1,5 +1,4 @@
 services:
-  # Backend API - FastAPI
   - type: web
     name: criptopedia-backend
     env: python
@@ -9,12 +8,4 @@ services:
       - key: YOUTUBE_API_KEY
         value: AIzaSyDNphleDorA8eYwvZ9KFLgb7_5KKad-8Bk
       - key: FRONTEND_URL
-        value: https://criptopedia-frontend.onrender.com
-    healthCheckPath: /health
-
-  # Frontend como servicio web estático (Python HTTP server)
-  - type: web
-    name: criptopedia-frontend
-    env: python
-    buildCommand: echo "Frontend estático - No necesita build"
-    startCommand: cd frontend && python -m http.server $PORT
+        value: https://criptopedia-universal.netlify.app
