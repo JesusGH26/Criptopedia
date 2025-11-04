@@ -1,0 +1,239 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Criptopedia Universal - Enciclopedia de Criptografía</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        .card-hover:hover {
+            transform: translateY(-5px);
+            transition: all 0.3s ease;
+        }
+        .fade-in {
+            animation: fadeIn 0.5s ease-in;
+        }
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        .line-clamp-2 {
+            display: -webkit-box;
+            -webkit-line-clamp: 2;
+            -webkit-box-orient: vertical;
+            overflow: hidden;
+        }
+        .line-clamp-3 {
+            display: -webkit-box;
+            -webkit-line-clamp: 3;
+            -webkit-box-orient: vertical;
+            overflow: hidden;
+        }
+        .aspect-w-16 {
+            position: relative;
+            padding-bottom: 56.25%; /* 16:9 aspect ratio */
+        }
+        .aspect-w-16 iframe {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+        }
+    </style>
+</head>
+<body class="bg-gradient-to-br from-blue-50 to-indigo-100 min-h-screen">
+    
+    <!-- Header -->
+    <header class="bg-white shadow-sm border-b sticky top-0 z-30">
+        <div class="container mx-auto px-4 py-4">
+            <div class="flex items-center justify-between">
+                <div class="flex items-center space-x-3">
+                    <div class="bg-blue-600 text-white p-2 rounded-lg">
+                        <i class="fas fa-lock"></i>
+                    </div>
+                    <div>
+                        <h1 class="text-2xl font-bold text-gray-800">Criptopedia Universal</h1>
+                        <p class="text-xs text-gray-600">IA de YouTube para cualquier método de encriptación</p>
+                    </div>
+                </div>
+                <div class="flex items-center space-x-3">
+                    <!-- Indicador modo edición -->
+                    <div id="admin-indicator" class="hidden bg-yellow-100 text-yellow-800 px-3 py-1 rounded-full text-sm border border-yellow-200">
+                        <i class="fas fa-edit mr-1"></i>Modo Edición
+                    </div>
+                    
+                    <!-- Botón agregar algoritmo (solo admin) -->
+                    <button id="add-algorithm-btn" class="hidden bg-green-500 text-white px-4 py-2 rounded-lg hover:bg-green-600 transition font-medium">
+                        <i class="fas fa-plus mr-2"></i>Agregar Algoritmo
+                    </button>
+                    
+                    <button id="ia-btn" class="bg-green-500 text-white px-4 py-2 rounded-lg hover:bg-green-600 transition font-medium">
+                        <i class="fas fa-robot mr-2"></i>IA de YouTube
+                    </button>
+                    <button id="admin-btn" class="bg-blue-500 text-white px-4 py-2 rounded-lg hover:bg-blue-600 transition font-medium">
+                        <i class="fas fa-user-shield mr-2"></i>Admin
+                    </button>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- Contenido Principal -->
+    <main class="container mx-auto px-4 py-8">
+        
+        <!-- Hero Section -->
+        <section class="text-center mb-12 fade-in">
+            <div class="inline-flex items-center space-x-2 bg-green-100 text-green-700 px-4 py-2 rounded-full text-sm font-medium mb-6">
+                <i class="fab fa-youtube"></i>
+                <span>IA YouTube - Búsqueda de videos</span>
+            </div>
+            
+            <h2 class="text-4xl font-bold text-gray-800 mb-4">
+                Enciclopedia de 
+                <span class="text-blue-600">Criptografía Universal</span>
+            </h2>
+            <p class="text-gray-600 text-lg max-w-2xl mx-auto">
+                Explora cualquier método de encriptación con nuestra IA que encuentra 
+                videos educativos automáticamente para algoritmos usando YouTube.
+            </p>
+        </section>
+
+        <!-- Grid de Algoritmos -->
+        <section id="algorithms-section" class="fade-in">
+            <div id="algorithms-grid" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                <!-- Los algoritmos se cargan dinámicamente aquí -->
+                <div class="text-center py-12">
+                    <i class="fas fa-spinner fa-spin text-3xl text-blue-500 mb-4"></i>
+                    <p class="text-gray-500">Cargando algoritmos...</p>
+                </div>
+            </div>
+        </section>
+
+    </main>
+
+    <!-- Modal IA YouTube -->
+    <div id="ia-modal" class="fixed inset-0 bg-black bg-opacity-50 hidden items-center justify-center z-50 p-4">
+        <div class="bg-white rounded-xl p-6 max-w-4xl w-full mx-auto fade-in max-h-[90vh] overflow-y-auto">
+            <div class="flex justify-between items-center mb-6">
+                <div class="flex items-center space-x-3">
+                    <div class="bg-green-100 text-green-600 p-2 rounded-lg">
+                        <i class="fab fa-youtube"></i>
+                    </div>
+                    <div>
+                        <h3 class="text-xl font-bold text-gray-800">IA de YouTube de Videos</h3>
+                        <p class="text-gray-600 text-sm">Búsqueda de contenido en YouTube</p>
+                    </div>
+                </div>
+                <button onclick="closeModal('ia-modal')" class="text-gray-500 hover:text-gray-700">
+                    <i class="fas fa-times text-xl"></i>
+                </button>
+            </div>
+            
+            <div class="space-y-6">
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                    <div>
+                        <label class="block text-sm font-medium text-gray-700 mb-2">
+                            <i class="fas fa-code mr-2"></i>Algoritmo a buscar
+                        </label>
+                        <select id="algorithm-select" 
+                                class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-green-500">
+                            <option value="">Selecciona un algoritmo...</option>
+                        </select>
+                        <input type="text" id="custom-algorithm" placeholder="O escribe cualquier algoritmo..." 
+                               class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-green-500 mt-2 hidden">
+                    </div>
+                    
+                    <div class="flex items-end">
+                        <button onclick="searchVideos()" 
+                                class="w-full bg-green-600 text-white py-2 px-4 rounded-lg hover:bg-green-700 transition font-semibold flex items-center justify-center space-x-2">
+                            <i class="fab fa-youtube"></i>
+                            <span>Buscar en YouTube</span>
+                        </button>
+                    </div>
+                </div>
+
+                <div class="bg-green-50 border border-green-200 rounded-lg p-4">
+                    <div class="flex items-start space-x-3">
+                        <i class="fas fa-lightbulb text-green-600 mt-1"></i>
+                        <div>
+                            <h4 class="font-semibold text-green-800 text-sm mb-1">¿Cómo funciona la IA YouTube?</h4>
+                            <p class="text-green-700 text-xs">
+                                Nuestra IA genera términos de búsqueda inteligentes y busca videos REALES en YouTube.
+                                Encuentra el contenido más educativo y relevante para cualquier algoritmo usando la API oficial de YouTube.
+                            </p>
+                        </div>
+                    </div>
+                </div>
+
+                <div id="video-results" class="space-y-4">
+                    <!-- Resultados de videos aparecen aquí -->
+                    <div class="text-center py-8 text-gray-500">
+                        <i class="fab fa-youtube text-3xl mb-3"></i>
+                        <p>Selecciona un algoritmo y busca videos en YouTube</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal de Login -->
+    <div id="login-modal" class="fixed inset-0 bg-black bg-opacity-50 hidden items-center justify-center z-50 p-4">
+        <div class="bg-white rounded-xl p-6 max-w-sm w-full mx-auto fade-in">
+            <div class="text-center mb-6">
+                <div class="bg-blue-100 text-blue-600 w-12 h-12 rounded-full flex items-center justify-center mx-auto mb-3">
+                    <i class="fas fa-lock"></i>
+                </div>
+                <h3 class="text-xl font-bold text-gray-800">Acceso Administrativo</h3>
+                <p class="text-gray-600 text-sm mt-1">Para activar modo edición</p>
+            </div>
+            
+            <form id="login-form" class="space-y-4">
+                <div>
+                    <label class="block text-sm font-medium text-gray-700 mb-1">Usuario</label>
+                    <input type="text" id="username" required value="admin"
+                           class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500">
+                </div>
+                
+                <div>
+                    <label class="block text-sm font-medium text-gray-700 mb-1">Contraseña</label>
+                    <input type="password" id="password" required value="admin123"
+                           class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500">
+                </div>
+                
+                <div class="bg-blue-50 p-3 rounded-lg">
+                    <p class="text-blue-700 text-xs">
+                        <strong>Credenciales por defecto:</strong><br>
+                        Usuario: <code>admin</code><br>
+                        Contraseña: <code>admin123</code>
+                    </p>
+                </div>
+                
+                <div class="flex space-x-3 pt-2">
+                    <button type="submit" 
+                            class="flex-1 bg-blue-600 text-white py-2 px-4 rounded-lg hover:bg-blue-700 transition font-medium">
+                        Activar Edición
+                    </button>
+                    <button type="button" onclick="closeModal('login-modal')"
+                            class="flex-1 bg-gray-500 text-white py-2 px-4 rounded-lg hover:bg-gray-600 transition font-medium">
+                        Cancelar
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <footer class="bg-white border-t mt-12">
+        <div class="container mx-auto px-4 py-6 text-center text-gray-600">
+            <p class="flex items-center justify-center">
+                <i class="fab fa-youtube text-red-500 mr-2"></i>
+                Criptopedia Universal con IA de YouTube para cualquier método de encriptación
+            </p>
+        </div>
+    </footer>
+
+    <script src="app.js"></script>
+</body>
+</html>
