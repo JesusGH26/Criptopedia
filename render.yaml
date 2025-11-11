@@ -2,10 +2,10 @@ services:
   - type: web
     name: criptopedia-backend
     env: python
-    buildCommand: cd backend && pip install -r requirements.txt
-    startCommand: cd backend && uvicorn main:app --host 0.0.0.0 --port $PORT
+    buildCommand: pip install -r backend/requirements.txt
+    startCommand: cd backend && python main.py
     envVars:
       - key: YOUTUBE_API_KEY
         value: AIzaSyDNphleDorA8eYwvZ9KFLgb7_5KKad-8Bk
       - key: FRONTEND_URL
-        value: https://criptopedia-universal.netlify.app
+        value: https://criptopedia-frontend.onrender.com
